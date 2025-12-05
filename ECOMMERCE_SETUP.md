@@ -255,4 +255,4 @@ project_airflow/
 
 ---
 
-### Author: Valeria Ramirez Hernandez
+**¡Listo para analizar eventos de e-commerce en tiempo real! 🚀**

@@ -1,0 +1,22 @@
+# ========================================================================================
+# 📦 DEPENDENCIAS DEL PROYECTO - E-COMMERCE ANALYTICS PIPELINE
+# ========================================================================================
+#
+# INSTALACIÓN:
+#   pip install -r requirements.txt
+#
+# ========================================================================================
+
+# Kafka Client - IMPORTANTE: usar kafka-python-ng en lugar de kafka-python
+# kafka-python-ng es un fork mantenido que funciona con Python 3.12+
+kafka-python-ng==2.2.2
+
+# MongoDB Driver
+pymongo==4.5.0
+
+# Data Analysis & Visualization (para el dashboard, opcional para producers)
+pandas==2.1.1
+plotly==5.17.0
+
+# Streamlit (solo para el dashboard, opcional para producers)
+streamlit==1.28.0
