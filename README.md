@@ -1,13 +1,16 @@
-# 🛒 E-commerce Analytics Pipeline - Guía de Uso
+¡Claro\! Aquí tienes la traducción al inglés del documento:
 
-## 📋 Descripción
+# 🛒 E-commerce Analytics Pipeline - Usage Guide
 
-Este proyecto implementa un pipeline completo de análisis de eventos de e-commerce utilizando:
-- **Kafka**: Para streaming de eventos en tiempo real
-- **MongoDB**: Para persistencia de eventos
-- **Streamlit**: Para visualización y análisis interactivo
+## 📋 Description
 
-## 🏗️ Arquitectura
+This project implements a complete e-commerce event analysis pipeline using:
+
+  - **Kafka**: For real-time event streaming
+  - **MongoDB**: For event persistence
+  - **Streamlit**: For interactive visualization and analysis
+
+## 🏗️ Architecture
 
 ```
 Producer (Python) → Kafka (ecommerce.events) → Consumer (Python) → MongoDB
@@ -15,117 +18,120 @@ Producer (Python) → Kafka (ecommerce.events) → Consumer (Python) → MongoDB
                                                             Dashboard (Streamlit)
 ```
 
-## 🚀 Inicio Rápido
+## 🚀 Quick Start
 
-### 1. Levantar la Infraestructura
+### 1\. Bring Up the Infrastructure
 
 ```bash
-# Iniciar todos los servicios (Kafka, MongoDB, Consumer, Dashboard)
+# Start all services (Kafka, MongoDB, Consumer, Dashboard)
 docker compose up -d
 
-# Verificar que todos los servicios estén corriendo
+# Verify that all services are running
 docker compose ps
 ```
 
-### 2. Generar Eventos de E-commerce
+### 2\. Generate E-commerce Events
 
-Tienes dos opciones para generar eventos:
+You have two options to generate events:
 
-#### Opción A: Producer Simple (un proceso)
+#### Option A: Simple Producer (single process)
 
 ```bash
-# Navegar a la carpeta src
+# Navigate to the src folder
 cd src
 
-# Instalar dependecias
+# Install dependencies
 pip install -r requirements.txt
 
-# Ejecutar el producer para generar eventos de ecommerce
-# Duración: 5 minutos, Tasa: 5 eventos/segundo
+# Run the producer to generate e-commerce events
+# Duration: 5 minutes, Rate: 5 events/second
 python producer.py --stream ecommerce --duration 5 --rate 5
 ```
 
-#### Opción B: Multi-Producer (múltiples procesos simultáneos)
+#### Option B: Multi-Producer (multiple simultaneous processes)
 
 ```bash
-# Navegar a la carpeta src
+# Navigate to the src folder
 cd src
 
-# Ejecutar múltiples producers simultáneamente
-# 3 productores, cada uno durante 10 minutos a 5 eventos/sec
+# Run multiple producers simultaneously
+# 3 producers, each for 10 minutes at 5 events/sec
 python multi_producer.py --producers 3 --duration 10 --rate 5
 ```
 
-**Parámetros del Multi-Producer:**
-- `--producers N`: Número de instancias de producer a ejecutar en paralelo
-- `--duration M`: Duración en minutos de cada producer
-- `--rate R`: Eventos por segundo por cada producer
+**Multi-Producer Parameters:**
 
-### 3. Verificar que los Datos Fluyen
+  - `--producers N`: Number of producer instances to run in parallel
+  - `--duration M`: Duration in minutes for each producer
+  - `--rate R`: Events per second for each producer
+
+### 3\. Verify Data Flow
 
 #### Kafka UI
-- URL: http://localhost:8080
-- Verifica que existe el tópico `ecommerce.events`
-- Deberías ver mensajes llegando en tiempo real
+
+  - URL: http://localhost:8080
+  - Verify that the `ecommerce.events` topic exists
+  - You should see messages arriving in real time
 
 #### Mongo Express
-- URL: http://localhost:8081
-- Usuario: `admin`
-- Password: `mongopass`
-- Base de datos: `kafka_events_db`
-- Colección: `ecommerce`
 
-### 4. Visualizar el Dashboard
+  - URL: http://localhost:8081
+  - Username: `admin`
+  - Password: `mongopass`
+  - Database: `kafka_events_db`
+  - Collection: `ecommerce`
 
-- URL: http://localhost:8501
-- El dashboard se actualiza automáticamente
-- Incluye:
-  - **Métricas Básicas**: Conteo de eventos por tipo, usuarios únicos, revenue
-  - **Segmentación de Usuarios**:
-    - Por frecuencia de eventos
-    - Por categorías de productos
-    - Por tipo de dispositivo/navegador
-    - Por horarios de actividad
+### 4\. View the Dashboard
 
-## 📊 Tipos de Eventos Generados
+  - URL: http://localhost:8501
+  - The dashboard updates automatically
+  - Includes:
+      - **Basic Metrics**: Count of events by type, unique users, revenue
+      - **User Segmentation**:
+          - By event frequency
+          - By product categories
+          - By device/browser type
+          - By activity hours
 
-El producer genera los siguientes tipos de eventos de e-commerce:
+## 📊 Generated Event Types
 
-1. **page_view**: Vista de página
-2. **product_view**: Vista de producto
-3. **add_to_cart**: Agregar al carrito
-4. **remove_from_cart**: Remover del carrito
-5. **purchase**: Compra completada
-6. **search**: Búsqueda de productos
-7. **login**: Inicio de sesión
-8. **logout**: Cierre de sesión
+The producer generates the following types of e-commerce events:
 
-## 🛠️ Comandos Útiles
+1.  **page\_view**: Page view
+2.  **product\_view**: Product view
+3.  **add\_to\_cart**: Add to cart
+4.  **remove\_from\_cart**: Remove from cart
+5.  **purchase**: Completed purchase
+6.  **search**: Product search
+7.  **login**: Login
+8.  **logout**: Logout
+
+## 🛠️ Useful Commands
 
 ### Docker Compose
 
 ```bash
-# Ver logs de un servicio específico
+# View logs of a specific service
 docker compose logs -f ecommerce-consumer
 docker compose logs -f ecommerce-dashboard
 
-# Reiniciar un servicio
+# Restart a service
 docker compose restart ecommerce-consumer
 
-# Detener todos los servicios
+# Stop all services
 docker compose down
 
-# Detener y eliminar volúmenes (¡cuidado! borra todos los datos)
+# Stop and remove volumes (careful! deletes all data)
 docker compose down -v
 ```
 
 ### MongoDB
 
 ```bash
-# Conectarse a MongoDB desde la terminal
+# Connect to MongoDB from the terminal
 docker exec -it kafka-lab-mongodb mongosh -u admin -p mongopass
 
-# Dentro de mongosh:
+# Inside mongosh:
 use kafka_events_db
 db.ecommerce.countDocuments()
 db.ecommerce.find().limit(5)
@@ -134,10 +140,10 @@ db.ecommerce.find().limit(5)
 ### Kafka
 
 ```bash
-# Ver tópicos disponibles
+# View available topics
 docker exec -it kafka-lab-broker kafka-topics --list --bootstrap-server localhost:9092
 
-# Ver mensajes del tópico (desde el principio)
+# View messages from the topic (from the beginning)
 docker exec -it kafka-lab-broker kafka-console-consumer \
   --bootstrap-server localhost:9092 \
   --topic ecommerce.events \
@@ -145,114 +151,129 @@ docker exec -it kafka-lab-broker kafka-console-consumer \
   --max-messages 10
 ```
 
-## 📈 Análisis Disponibles en el Dashboard
+## 📈 Available Analysis on the Dashboard
 
-### 1. Métricas Básicas
-- Total de eventos procesados
-- Usuarios únicos
-- Sesiones únicas
-- Revenue total (de compras)
-- Distribución de eventos por tipo
+### 1\. Basic Metrics
 
-### 2. Segmentación de Usuarios
+  - Total processed events
+  - Unique users
+  - Unique sessions
+  - Total revenue (from purchases)
+  - Distribution of events by type
 
-#### Por Frecuencia de Eventos
-- **Alto**: 20+ eventos
-- **Medio**: 10-19 eventos
-- **Bajo**: 1-9 eventos
+### 2\. User Segmentation
 
-#### Por Categoría de Productos
-- Electronics
-- Appliances
-- Sports
-- Accessories
-- Education
+#### By Event Frequency
 
-#### Por Dispositivo
-- iOS (iPhone/iPad)
-- Android
-- Windows
-- macOS
+  - **High**: 20+ events
+  - **Medium**: 10-19 events
+  - **Low**: 1-9 events
 
-#### Por Horario de Actividad
-- **Madrugada**: 0-6 horas
-- **Mañana**: 6-12 horas
-- **Tarde**: 12-18 horas
-- **Noche**: 18-24 horas
+#### By Product Category
 
-## 🎯 Puertos y Servicios
+  - Electronics
+  - Appliances
+  - Sports
+  - Accessories
+  - Education
 
-| Puerto | Servicio | Descripción |
+#### By Device
+
+  - iOS (iPhone/iPad)
+  - Android
+  - Windows
+  - macOS
+
+#### By Activity Hour
+
+  - **Early Morning**: 0-6 hours
+  - **Morning**: 6-12 hours
+  - **Afternoon**: 12-18 hours
+  - **Night**: 18-24 hours
+
+## 🎯 Ports and Services
+
+| Port | Service | Description |
 |--------|----------|-------------|
-| 2181 | Zookeeper | Coordinación de Kafka |
-| 9092 | Kafka | Broker de mensajes |
-| 8080 | Kafka UI | Interfaz web de Kafka |
-| 8501 | Dashboard | Dashboard de Streamlit |
-| 27017 | MongoDB | Base de datos |
-| 8081 | Mongo Express | Interfaz web de MongoDB |
+| 2181 | Zookeeper | Kafka coordination |
+| 9092 | Kafka | Message broker |
+| 8080 | Kafka UI | Kafka web interface |
+| 8501 | Dashboard | Streamlit Dashboard |
+| 27017 | MongoDB | Database |
+| 8081 | Mongo Express | MongoDB web interface |
 
 ## 🐛 Troubleshooting
 
-### El consumer no está procesando eventos
+### The consumer is not processing events
+
 ```bash
-# Verificar logs del consumer
+# Check consumer logs
 docker compose logs -f ecommerce-consumer
 
-# Reiniciar el consumer
+# Restart the consumer
 docker compose restart ecommerce-consumer
 ```
 
-### El dashboard no muestra datos
-1. Verificar que el consumer esté corriendo y procesando eventos
-2. Verificar en Mongo Express que la colección `ecommerce` tiene documentos
-3. Refrescar el dashboard manualmente desde el sidebar
+### The dashboard is not showing data
 
-### Kafka no está disponible
+1.  Verify that the consumer is running and processing events
+2.  Verify in Mongo Express that the `ecommerce` collection has documents
+3.  Manually refresh the dashboard from the sidebar
+
+### Kafka is not available
+
 ```bash
-# Verificar health de Kafka
+# Check Kafka health
 docker compose ps
 
-# Ver logs de Kafka
+# View Kafka logs
 docker compose logs -f kafka
 
-# Reiniciar servicios de Kafka
+# Restart Kafka services
 docker compose restart zookeeper kafka
 ```
 
-## 📝 Notas Adicionales
+## 📝 Additional Notes
 
-- Los datos se persisten en volúmenes de Docker, por lo que sobreviven a reinicios
-- Para empezar con datos frescos, usa `docker compose down -v`
-- El dashboard tiene auto-refresh configurable desde el sidebar
-- Los producers pueden ejecutarse fuera de Docker (en tu máquina local)
-- Asegúrate de tener Python 3.11+ y las dependencias instaladas si ejecutas los producers localmente
+  - Data is persisted in Docker volumes, so it survives restarts
+  - To start with fresh data, use `docker compose down -v`
+  - The dashboard has configurable auto-refresh from the sidebar
+  - Producers can be run outside of Docker (on your local machine)
+  - Make sure you have Python 3.11+ and dependencies installed if you run producers locally
 
-## 🔗 Estructura del Proyecto
+## 🔗 Project Structure
 
 ```
 project_airflow/
 ├── src/
-│   ├── producer.py              # Producer principal de eventos
-│   ├── multi_producer.py        # Launcher de múltiples producers
+│   ├── producer.py              # Main event producer
+│   ├── multi_producer.py        # Multi-producer launcher
 │   ├── consumers/
-│   │   └── ecommerce_consumer.py   # Consumer de eventos de ecommerce
+│   │   └── ecommerce_consumer.py   # E-commerce event consumer
 │   └── dashboard/
-│       ├── app.py               # Aplicación Streamlit
-│       ├── Dockerfile           # Dockerfile del dashboard
-│       └── requirements.txt     # Dependencias del dashboard
-├── docker-compose.yml           # Orquestación de servicios
-└── ECOMMERCE_SETUP.md          # Esta guía
+│       ├── app.py               # Streamlit application
+│       ├── Dockerfile           # Dashboard Dockerfile
+│       └── requirements.txt     # Dashboard dependencies
+├── docker-compose.yml           # Service orchestration
+└── ECOMMERCE_SETUP.md          # This guide
 ```
 
-## ✅ Checklist de Verificación
+## ✅ Verification Checklist
 
-- [ ] Todos los servicios de docker-compose están corriendo
-- [ ] Kafka UI muestra el tópico `ecommerce.events`
-- [ ] El producer está generando eventos
-- [ ] El consumer está procesando eventos (ver logs)
-- [ ] Mongo Express muestra documentos en la colección `ecommerce`
-- [ ] El dashboard en http://localhost:8501 muestra datos
+  - [ ] All docker-compose services are running
+  - [ ] Kafka UI shows the `ecommerce.events` topic
+  - [ ] The producer is generating events
+  - [ ] The consumer is processing events (check logs)
+  - [ ] Mongo Express shows documents in the `ecommerce` collection
+  - [ ] The dashboard at http://localhost:8501 shows data
 
----
+-----
 
-### Author: Valeria Ramirez Hernandez
+### Authors:
+
+  - Valeria Ramirez Hernandez
+  - Esther Apaza
+  - Daniel Valdes
+  - Carlos Helguera
+  - Rogelio Novelo
+
